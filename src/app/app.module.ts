@@ -9,6 +9,7 @@ import { PrefixModule } from './prefix/prefix.module';
 import { GenderModule } from './gender/gender.module';
 import { ClassroomModule } from './classroom/classroom.module';
 import { ClassroomStudentModule } from './classroom-student/classroom-student.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Global()
 @Module({
@@ -50,16 +51,21 @@ import { ClassroomStudentModule } from './classroom-student/classroom-student.mo
         });
       },
     }),
-    PrefixModule,
-    GenderModule,
-    ClassroomModule,
-    ClassroomStudentModule,
+    ConfigModule.forRoot({ isGlobal: true }),
   ],
   exports: [PrismaModule],
 })
 class GlobalModule {}
 
 @Module({
-  imports: [GlobalModule, StudentModule, GradeLevelModule],
+  imports: [
+    GlobalModule,
+    StudentModule,
+    GradeLevelModule,
+    PrefixModule,
+    GenderModule,
+    ClassroomModule,
+    ClassroomStudentModule,
+  ],
 })
 export class AppModule {}

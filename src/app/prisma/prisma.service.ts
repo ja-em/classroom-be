@@ -7,12 +7,19 @@ import {
 } from '@nestjs/common';
 import { PaginationInput } from 'types/input';
 import { IPaginationResponse } from 'types/interface';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
+  constructor(private readonly config: ConfigService) {
+    console.log({ db: config.get('DATABASE_URL') });
+    super({
+      datasourceUrl: config.getOrThrow('DATABASE_URL'),
+    });
+  }
   private readonly logger = new Logger(PrismaService.name);
 
   async onModuleInit() {
