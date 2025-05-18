@@ -21,7 +21,7 @@ export class ClassroomResolver {
     return this.classroomService.findAll(input);
   }
 
-  @Query(() => ClassroomObject, { name: 'classroom' })
+  @Query(() => ClassroomObject, { name: 'getClassroomById' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.classroomService.findOne(id);
   }

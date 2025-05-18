@@ -94,7 +94,14 @@ export class ClassroomService {
 
   async remove(id: number) {
     const find = await this.findOne(id);
-    await this.prismaService.classroom.delete({ where: { classroomid: id } });
+    await Promise.all([
+      this.prismaService.classroom.delete({ where: { classroomid: id } }),
+      this.prismaService.studentClassroom.deleteMany({
+        where: {
+          classroomid: find.classroomid,
+        },
+      }),
+    ]);
     return find;
   }
 }

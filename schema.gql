@@ -87,7 +87,7 @@ type Query {
   getAllPrefix: [PrefixObject!]!
   getAllGender: [GenderObject!]!
   getAllClassroom(input: GetAllClassroomInput): ClassroomPaginationObject!
-  classroom(id: Int!): ClassroomObject!
+  getClassroomById(id: Int!): ClassroomObject!
   classroomStudent(id: Int!): ClassroomStudent!
 }
 
