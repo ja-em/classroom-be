@@ -1,0 +1,146 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type PrefixObject {
+  prefixid: Int!
+  prefixname: String!
+  student: [StudentObject!]
+}
+
+type GenderObject {
+  genderid: Int!
+  gendername: String!
+  student: [StudentObject!]
+}
+
+type GradeLevelObject {
+  gradelevelid: Int!
+  levelname: String!
+  student: [StudentObject!]
+}
+
+type ClassroomObject {
+  classroomid: Int!
+  classname: String!
+  academic_year: Int!
+  homeroom_teacher: String!
+  student_classroom: [StudentClassroomObject!]
+}
+
+type StudentClassroomObject {
+  student_classroom_id: Int!
+  studentid: Int!
+  classroomid: Int!
+  student: StudentObject!
+  classroom: ClassroomObject!
+}
+
+type StudentObject {
+  studentid: Int!
+  prefixid: Int
+  firstname: String!
+  lastname: String!
+  genderid: Int
+  birthdate: DateTime!
+  gradelevelid: Int
+  prefix: PrefixObject
+  gender: GenderObject
+  gradelevel: GradeLevelObject
+  student_classroom: [StudentClassroomObject!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type StudentPaginationObject {
+  items: [StudentObject!]!
+  totalItem: Float!
+  totalPage: Float!
+  page: Float!
+  limit: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+type Classroom {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type ClassroomStudent {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  getAllPrefix: [PrefixObject!]!
+  getAllGender: [GenderObject!]!
+  classroom(id: Int!): Classroom!
+  classroomStudent(id: Int!): ClassroomStudent!
+  getStudents(input: GetAllStudentInput): StudentPaginationObject!
+  getStudentById(id: Int!): StudentObject!
+  getAllGradeLevel: [GradeLevelObject!]!
+}
+
+input GetAllStudentInput {
+  page: Float = 1
+  limit: Float = 10
+  keyword: String
+  gradlevelId: Float
+}
+
+type Mutation {
+  createClassroom(createClassroomInput: CreateClassroomInput!): Classroom!
+  updateClassroom(updateClassroomInput: UpdateClassroomInput!): Classroom!
+  removeClassroom(id: Int!): Classroom!
+  createClassroomStudent(createClassroomStudentInput: CreateClassroomStudentInput!): ClassroomStudent!
+  updateClassroomStudent(updateClassroomStudentInput: UpdateClassroomStudentInput!): ClassroomStudent!
+  removeClassroomStudent(id: Int!): ClassroomStudent!
+  createStudent(createStudentInput: CreateStudentInput!): StudentObject!
+  updateStudent(updateStudentInput: UpdateStudentInput!): StudentObject!
+  removeStudent(id: Int!): StudentObject!
+}
+
+input CreateClassroomInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateClassroomInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateClassroomStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateClassroomStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateStudentInput {
+  prefixid: Int!
+  firstname: String!
+  lastname: String!
+  genderid: Int!
+  birthdate: DateTime!
+  gradelevelid: Int!
+}
+
+input UpdateStudentInput {
+  prefixid: Int
+  firstname: String
+  lastname: String
+  genderid: Int
+  birthdate: DateTime
+  gradelevelid: Int
+  studentid: Int!
+}

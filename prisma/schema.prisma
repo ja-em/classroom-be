@@ -1,0 +1,82 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mysql"
+    url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Classroom {
+    classroomid       Int                @id @default(autoincrement())
+    classname         String             @db.VarChar(50)
+    academic_year     Int                @db.Year
+    homeroom_teacher  String             @db.VarChar(100)
+    student_classroom StudentClassroom[]
+
+    @@index([classroomid], map: "idx_classroom_id")
+    @@map("classroom")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Gender {
+    genderid   Int       @id @default(autoincrement())
+    gendername String    @db.VarChar(10)
+    student    Student[]
+
+    @@map("gender")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model GradeLevel {
+    gradelevelid Int       @id @default(autoincrement())
+    levelname    String    @db.VarChar(10)
+    student      Student[]
+
+    @@map("gradelevel")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Prefix {
+    prefixid   Int       @id @default(autoincrement())
+    prefixname String    @db.VarChar(10)
+    student    Student[]
+
+    @@map("prefix")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Student {
+    studentid         Int                @id @default(autoincrement())
+    prefixid          Int?
+    firstname         String             @db.VarChar(50)
+    lastname          String             @db.VarChar(50)
+    genderid          Int?
+    birthdate         DateTime           @db.Date
+    gradelevelid      Int?
+    prefix            Prefix?            @relation(fields: [prefixid], references: [prefixid], onDelete: Restrict, onUpdate: Restrict, map: "student_ibfk_1")
+    gender            Gender?            @relation(fields: [genderid], references: [genderid], onDelete: Restrict, onUpdate: Restrict, map: "student_ibfk_2")
+    gradelevel        GradeLevel?        @relation(fields: [gradelevelid], references: [gradelevelid], onDelete: Restrict, onUpdate: Restrict, map: "student_ibfk_3")
+    student_classroom StudentClassroom[]
+
+    @@index([genderid], map: "genderid")
+    @@index([gradelevelid], map: "gradelevelid")
+    @@index([studentid], map: "idx_student_id")
+    @@index([prefixid], map: "prefixid")
+    @@map("student")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model StudentClassroom {
+    student_classroom_id Int       @id @default(autoincrement())
+    studentid            Int
+    classroomid          Int
+    student              Student   @relation(fields: [studentid], references: [studentid], onUpdate: Restrict, map: "student_classroom_ibfk_1")
+    classroom            Classroom @relation(fields: [classroomid], references: [classroomid], onUpdate: Restrict, map: "student_classroom_ibfk_2")
+
+    @@index([classroomid], map: "classroomid")
+    @@index([student_classroom_id], map: "idx_student_classroom_id")
+    @@index([studentid], map: "studentid")
+    @@map("student_classroom")
+}
