@@ -15,7 +15,6 @@ export class PrismaService
   implements OnModuleInit, OnModuleDestroy
 {
   constructor(private readonly config: ConfigService) {
-    console.log({ db: config.get('DATABASE_URL') });
     super({
       datasourceUrl: config.getOrThrow('DATABASE_URL'),
     });

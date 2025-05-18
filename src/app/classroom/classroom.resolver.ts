@@ -1,41 +1,37 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Args, Int, Mutation } from '@nestjs/graphql';
 import { ClassroomService } from './classroom.service';
-import { Classroom } from './entities/classroom.entity';
-import { CreateClassroomInput } from './dto/create-classroom.input';
-import { UpdateClassroomInput } from './dto/update-classroom.input';
+import { ClassroomObject, ClassroomPaginationObject } from 'types/object';
+import {
+  CreateClassroomInput,
+  GetAllClassroomInput,
+  UpdateClassroomInput,
+} from 'types/input/classroom';
 
-@Resolver(() => Classroom)
+@Resolver(() => ClassroomObject)
 export class ClassroomResolver {
   constructor(private readonly classroomService: ClassroomService) {}
 
-  @Mutation(() => Classroom)
-  createClassroom(
-    @Args('createClassroomInput') createClassroomInput: CreateClassroomInput
-  ) {
+  @Mutation(() => ClassroomObject)
+  createClassroom(@Args('input') createClassroomInput: CreateClassroomInput) {
     return this.classroomService.create(createClassroomInput);
   }
 
-  @Query(() => [Classroom], { name: 'classroom' })
-  findAll() {
-    return this.classroomService.findAll();
+  @Query(() => ClassroomPaginationObject, { name: 'getAllClassroom' })
+  findAll(@Args('input', { nullable: true }) input?: GetAllClassroomInput) {
+    return this.classroomService.findAll(input);
   }
 
-  @Query(() => Classroom, { name: 'classroom' })
+  @Query(() => ClassroomObject, { name: 'classroom' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.classroomService.findOne(id);
   }
 
-  @Mutation(() => Classroom)
-  updateClassroom(
-    @Args('updateClassroomInput') updateClassroomInput: UpdateClassroomInput
-  ) {
-    return this.classroomService.update(
-      updateClassroomInput.id,
-      updateClassroomInput
-    );
+  @Mutation(() => ClassroomObject)
+  updateClassroom(@Args('input') updateClassroomInput: UpdateClassroomInput) {
+    return this.classroomService.update(updateClassroomInput);
   }
 
-  @Mutation(() => Classroom)
+  @Mutation(() => ClassroomObject)
   removeClassroom(@Args('id', { type: () => Int }) id: number) {
     return this.classroomService.remove(id);
   }

@@ -28,6 +28,16 @@ type ClassroomObject {
   student_classroom: [StudentClassroomObject!]
 }
 
+type ClassroomPaginationObject {
+  items: [ClassroomObject!]!
+  totalItem: Float!
+  totalPage: Float!
+  page: Float!
+  limit: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type StudentClassroomObject {
   student_classroom_id: Int!
   studentid: Int!
@@ -65,24 +75,20 @@ type StudentPaginationObject {
   hasPreviousPage: Boolean!
 }
 
-type Classroom {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type ClassroomStudent {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
 type Query {
-  getAllPrefix: [PrefixObject!]!
-  getAllGender: [GenderObject!]!
-  classroom(id: Int!): Classroom!
-  classroomStudent(id: Int!): ClassroomStudent!
   getStudents(input: GetAllStudentInput): StudentPaginationObject!
   getStudentById(id: Int!): StudentObject!
   getAllGradeLevel: [GradeLevelObject!]!
+  getAllPrefix: [PrefixObject!]!
+  getAllGender: [GenderObject!]!
+  getAllClassroom(input: GetAllClassroomInput): ClassroomPaginationObject!
+  classroom(id: Int!): ClassroomObject!
+  classroomStudent(id: Int!): ClassroomStudent!
 }
 
 input GetAllStudentInput {
@@ -92,38 +98,22 @@ input GetAllStudentInput {
   gradlevelId: Float
 }
 
+input GetAllClassroomInput {
+  page: Float = 1
+  limit: Float = 10
+  keyword: String
+}
+
 type Mutation {
-  createClassroom(createClassroomInput: CreateClassroomInput!): Classroom!
-  updateClassroom(updateClassroomInput: UpdateClassroomInput!): Classroom!
-  removeClassroom(id: Int!): Classroom!
-  createClassroomStudent(createClassroomStudentInput: CreateClassroomStudentInput!): ClassroomStudent!
-  updateClassroomStudent(updateClassroomStudentInput: UpdateClassroomStudentInput!): ClassroomStudent!
-  removeClassroomStudent(id: Int!): ClassroomStudent!
   createStudent(createStudentInput: CreateStudentInput!): StudentObject!
   updateStudent(updateStudentInput: UpdateStudentInput!): StudentObject!
   removeStudent(id: Int!): StudentObject!
-}
-
-input CreateClassroomInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateClassroomInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
-}
-
-input CreateClassroomStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateClassroomStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+  createClassroom(input: CreateClassroomInput!): ClassroomObject!
+  updateClassroom(input: UpdateClassroomInput!): ClassroomObject!
+  removeClassroom(id: Int!): ClassroomObject!
+  createClassroomStudent(createClassroomStudentInput: CreateClassroomStudentInput!): ClassroomStudent!
+  updateClassroomStudent(updateClassroomStudentInput: UpdateClassroomStudentInput!): ClassroomStudent!
+  removeClassroomStudent(id: Int!): ClassroomStudent!
 }
 
 input CreateStudentInput {
@@ -143,4 +133,28 @@ input UpdateStudentInput {
   birthdate: DateTime
   gradelevelid: Int
   studentid: Int!
+}
+
+input CreateClassroomInput {
+  classname: String!
+  academic_year: Float!
+  homeroom_teacher: String!
+}
+
+input UpdateClassroomInput {
+  classname: String
+  academic_year: Float
+  homeroom_teacher: String
+  classroomid: Float!
+}
+
+input CreateClassroomStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateClassroomStudentInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

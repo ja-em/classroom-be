@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { StudentClassroomObject } from './student-classroom';
+import { PaginationResponseBulder } from './pagination';
 
 @ObjectType()
 export class ClassroomObject {
@@ -18,3 +19,8 @@ export class ClassroomObject {
   @Field(() => [StudentClassroomObject], { nullable: true })
   student_classroom?: StudentClassroomObject[];
 }
+
+@ObjectType()
+export class ClassroomPaginationObject extends PaginationResponseBulder(
+  ClassroomObject,
+) {}
