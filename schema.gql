@@ -117,7 +117,7 @@ type Mutation {
   updateClassroom(input: UpdateClassroomInput!): ClassroomObject!
   removeClassroom(id: Int!): ClassroomObject!
   createStudentClassroom(input: CreateStudentClassroomInput!): StudentClassroomObject!
-  removeStudentClassroom(input: Int!): StudentClassroomObject!
+  removeStudentClassroom(studentClassroomId: Int!): StudentClassroomObject!
 }
 
 input CreateStudentInput {

@@ -26,7 +26,9 @@ export class StudentClassroomResolver {
   }
 
   @Mutation(() => StudentClassroomObject)
-  removeStudentClassroom(@Args('input', { type: () => Int! }) id: number) {
+  removeStudentClassroom(
+    @Args('studentClassroomId', { type: () => Int! }) id: number,
+  ) {
     return this.studentClassroomService.removeStudentClassroom(id);
   }
 }
