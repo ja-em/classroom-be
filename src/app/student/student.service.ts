@@ -95,6 +95,7 @@ export class StudentService {
           gradelevel: true,
           prefix: true,
           gender: true,
+          student_classroom: true,
         },
       }),
       this.prismaService.student.count({

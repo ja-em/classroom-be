@@ -46,6 +46,16 @@ type StudentClassroomObject {
   classroom: ClassroomObject!
 }
 
+type StudentClassroomPaginationObject {
+  items: [StudentClassroomObject!]!
+  totalItem: Float!
+  totalPage: Float!
+  page: Float!
+  limit: Float!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
 type StudentObject {
   studentid: Int!
   prefixid: Int
@@ -75,11 +85,6 @@ type StudentPaginationObject {
   hasPreviousPage: Boolean!
 }
 
-type ClassroomStudent {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 type Query {
   getStudents(input: GetAllStudentInput): StudentPaginationObject!
   getStudentById(id: Int!): StudentObject!
@@ -88,7 +93,7 @@ type Query {
   getAllGender: [GenderObject!]!
   getAllClassroom(input: GetAllClassroomInput): ClassroomPaginationObject!
   getClassroomById(id: Int!): ClassroomObject!
-  classroomStudent(id: Int!): ClassroomStudent!
+  getStudentClassroomByClassroomId(classroomId: Int!): StudentClassroomPaginationObject!
 }
 
 input GetAllStudentInput {
@@ -111,9 +116,6 @@ type Mutation {
   createClassroom(input: CreateClassroomInput!): ClassroomObject!
   updateClassroom(input: UpdateClassroomInput!): ClassroomObject!
   removeClassroom(id: Int!): ClassroomObject!
-  createClassroomStudent(createClassroomStudentInput: CreateClassroomStudentInput!): ClassroomStudent!
-  updateClassroomStudent(updateClassroomStudentInput: UpdateClassroomStudentInput!): ClassroomStudent!
-  removeClassroomStudent(id: Int!): ClassroomStudent!
 }
 
 input CreateStudentInput {
@@ -146,15 +148,4 @@ input UpdateClassroomInput {
   academic_year: Float
   homeroom_teacher: String
   classroomid: Float!
-}
-
-input CreateClassroomStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateClassroomStudentInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }

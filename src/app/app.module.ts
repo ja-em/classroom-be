@@ -8,8 +8,8 @@ import { GradeLevelModule } from './grade-level/grade-level.module';
 import { PrefixModule } from './prefix/prefix.module';
 import { GenderModule } from './gender/gender.module';
 import { ClassroomModule } from './classroom/classroom.module';
-import { ClassroomStudentModule } from './classroom-student/classroom-student.module';
 import { ConfigModule } from '@nestjs/config';
+import { StudentClassroomModule } from './student-classroom/student-classroom.module';
 
 @Global()
 @Module({
@@ -65,7 +65,7 @@ class GlobalModule {}
     PrefixModule,
     GenderModule,
     ClassroomModule,
-    ClassroomStudentModule,
+    StudentClassroomModule,
   ],
 })
 export class AppModule {}
