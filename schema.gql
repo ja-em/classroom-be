@@ -116,6 +116,8 @@ type Mutation {
   createClassroom(input: CreateClassroomInput!): ClassroomObject!
   updateClassroom(input: UpdateClassroomInput!): ClassroomObject!
   removeClassroom(id: Int!): ClassroomObject!
+  createStudentClassroom(input: CreateStudentClassroomInput!): StudentClassroomObject!
+  removeStudentClassroom(input: Int!): StudentClassroomObject!
 }
 
 input CreateStudentInput {
@@ -148,4 +150,9 @@ input UpdateClassroomInput {
   academic_year: Float
   homeroom_teacher: String
   classroomid: Float!
+}
+
+input CreateStudentClassroomInput {
+  classroomId: Int!
+  studentId: Int!
 }

@@ -1,9 +1,10 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { StudentClassroomService } from './student-classroom.service';
 import {
   StudentClassroomObject,
   StudentClassroomPaginationObject,
 } from 'types/object';
+import { CreateStudentClassroomInput } from 'types/input';
 
 @Resolver(() => StudentClassroomObject)
 export class StudentClassroomResolver {
@@ -19,10 +20,13 @@ export class StudentClassroomResolver {
     );
   }
 
-  // @ResolveField(() => StudentObject)
-  // student(@Parent() parent: StudentClassroomObject) {
-  //   console.log({ parent });
+  @Mutation(() => StudentClassroomObject)
+  createStudentClassroom(@Args('input') input: CreateStudentClassroomInput) {
+    return this.studentClassroomService.createStudentClassroom(input);
+  }
 
-  //   return parent.student;
-  // }
+  @Mutation(() => StudentClassroomObject)
+  removeStudentClassroom(@Args('input', { type: () => Int! }) id: number) {
+    return this.studentClassroomService.removeStudentClassroom(id);
+  }
 }
