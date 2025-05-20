@@ -171,6 +171,20 @@ export class StudentService {
 
   async remove(id: number) {
     const student = await this.findOne(id);
+    const findClassroom = await this.prismaService.studentClassroom.findMany({
+      where: {
+        studentid: student.studentid,
+      },
+      include: {
+        classroom: true,
+      },
+    });
+    if (findClassroom.length !== 0) {
+      throw new BadRequestException(
+        `This student is currently in classroom ` +
+          findClassroom.map((e) => e.classroom.classname).join(', '),
+      );
+    }
     await this.prismaService.student.delete({ where: { studentid: id } });
     return student;
   }
