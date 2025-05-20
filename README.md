@@ -6,8 +6,8 @@ This is a server-side application built using [NestJS](https://nestjs.com/) and 
 
 ## 📦 Requirements
 
-- **Node.js**: v18.x (LTS recommended)
-- **Package Manager**: npm or yarn
+- **Node.js**: v21.6.2
+- **Package Manager**: npm
 - **Database**: MySQL (or update `DATABASE_URL` for another)
 - **Prisma**: v5+
 
